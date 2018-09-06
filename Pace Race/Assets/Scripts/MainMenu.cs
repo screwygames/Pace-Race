@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject mm;
     public GameObject css;
+    public Button startButton;
+    public Button cssBackButton;
+    public Button cssNextButton;
+
+
     public CharacterSelectScreenController cssc;
     // Use this for initialization
     void Start()
@@ -43,16 +49,19 @@ public class MainMenu : MonoBehaviour
         GameState.setLaps(6);
         SceneManager.LoadScene("SampleScene");
     }
+
     public void toCSS()
     {
         mm.SetActive(false);
         css.SetActive(true);
+        cssNextButton.Select();
     }
 
     public void toMM()
     {
         mm.SetActive(true);
         css.SetActive(false);
+        startButton.Select();
     }
 
     public void gtfo()
