@@ -247,28 +247,8 @@ public class CarController : MonoBehaviour
     public void setPlayer(int pn)
     {
         playerNumber = pn;
-        switch (playerNumber)
-        {
-            case 1:
-                horizontalAxis = "C1XAxis";
-                gasAxis = "C1GasAxis";
-                break;
-            case 2:
-                horizontalAxis = "C2XAxis";
-                gasAxis = "C2GasAxis";
-                break;
-            case 3:
-                horizontalAxis = "C3XAxis";
-                gasAxis = "C3GasAxis";
-                break;
-            case 4:
-                horizontalAxis = "C4XAxis";
-                gasAxis = "C4GasAxis";
-                break;
-            default:
-                horizontalAxis = "Horizontal";
-                gasAxis = "Vertical";
-                break;
-        }
+        string[] controlsStr = GameState.getControls(pn);
+        horizontalAxis = controlsStr[0];
+        gasAxis = controlsStr[1];
     }
 }

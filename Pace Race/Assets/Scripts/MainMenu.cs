@@ -17,7 +17,11 @@ public class MainMenu : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        //set default controls
+        GameState.setControls(1, "C1LeftJoyX", "C1Triggers");
+        GameState.setControls(2, "C2LeftJoyX", "C2Triggers");
+        GameState.setControls(3, "C3LeftJoyX", "C3Triggers");
+        GameState.setControls(4, "C4LeftJoyX", "C4Triggers");
     }
 
     // Update is called once per frame

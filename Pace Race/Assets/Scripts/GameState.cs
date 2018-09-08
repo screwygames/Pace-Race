@@ -4,13 +4,15 @@ using UnityEngine;
 
 public static class GameState
 {
+    //TODO: Refactor this as an array (unless zero indexing is a problem but even so)
     private static int p1Car = 0;
     private static int p2Car = 0;
     private static int p3Car = 0;
     private static int p4Car = 0;
     private static int nLaps = 3;
-
     private static int place = 1;
+    private static string[][] inputs = new string[4][];
+
 
     public static void setCars(int p1, int p2, int p3, int p4)
     {
@@ -51,5 +53,15 @@ public static class GameState
     public static int getLaps()
     {
         return nLaps;
+    }
+
+    public static void setControls(int pNum, string xAxis, string triggerAxis)
+    {
+        inputs[pNum - 1] = new string[] { xAxis, triggerAxis };
+    }
+
+    public static string[] getControls(int pNum)
+    {
+        return inputs[pNum - 1];
     }
 }
