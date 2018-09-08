@@ -60,6 +60,11 @@ public static class GameState
         inputs[pNum - 1] = new string[] { xAxis, triggerAxis };
     }
 
+    public static void setControls(int pNum, string[] controls)
+    {
+        inputs[pNum - 1] = controls;
+    }
+
     public static string[] getControls(int pNum)
     {
         return inputs[pNum - 1];

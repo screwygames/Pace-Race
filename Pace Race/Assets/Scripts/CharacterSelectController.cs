@@ -12,8 +12,6 @@ public class CharacterSelectController : MonoBehaviour
     public Text carName;
 
     private string horizontalAxis;
-    private string aButton;
-    private string bButton;
     private float lastTime;
     private string[] carNames;
     private int carIndex;
@@ -49,39 +47,20 @@ public class CharacterSelectController : MonoBehaviour
         }
     }
 
+    public void OnEnable()
+    {
+        string[] controlsStr = GameState.getControls(playerNumber);
+        horizontalAxis = controlsStr[0];
+    }
+
     public void setPlayer(int pn)
     {
         playerNumber = pn;
-        switch (playerNumber)
-        {
-            case 1:
-                horizontalAxis = "C1XAxis";
-                aButton = "C1AButton";
-                bButton = "C1BButton";
-                break;
-            case 2:
-                horizontalAxis = "C2XAxis";
-                aButton = "C2AButton";
-                bButton = "C2BButton";
-                break;
-            case 3:
-                horizontalAxis = "C3XAxis";
-                aButton = "C3AButton";
-                bButton = "C3BButton";
-                break;
-            case 4:
-                horizontalAxis = "C4XAxis";
-                aButton = "C4AButton";
-                bButton = "C4BButton";
-                break;
-            default:
-                horizontalAxis = "C1XAxis";
-                aButton = "C1AButton";
-                bButton = "C1BButton";
-                break;
-
-        }
+        string[] controlsStr = GameState.getControls(pn);
+        horizontalAxis = controlsStr[0];
+        Debug.Log(GameState.getControls(playerNumber)[0]);
     }
+
     public void updateCarIndex(int u)
     {
         carIndex += u;
