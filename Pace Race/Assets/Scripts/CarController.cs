@@ -19,12 +19,13 @@ public class CarController : MonoBehaviour
     private string gasAxis;
     private Rigidbody rb;
     private int playerNumber;
+    private bool respawning = false;
     private Vector3 velocity = Vector3.zero;
 
     void Start ()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        //rb.freezeRotation = true;
         lapNum = 1;
         lapPosition = -1;
     }
@@ -39,12 +40,15 @@ public class CarController : MonoBehaviour
         Vector3 rotation = new Vector3(0.0f, moveHorizontal, 0.0f);
         Vector3 movement = rb.transform.forward * acceleration * moveVertical;
         float oldy = transform.eulerAngles.y;
-        
+
         //rotate correctly
-        rb.transform.Rotate(new Vector3(0.0f, moveHorizontal * Time.deltaTime * turnSpeed, 0.0f));
+        if (!respawning)
+        {
+            rb.transform.Rotate(new Vector3(0.0f, moveHorizontal * Time.deltaTime * turnSpeed, 0.0f));
+        }
 
         //accelerate if its upright
-        if (!isAirborne() && !isFalling())
+        if (!isAirborne() && !isFalling() && !respawning)
         {
             rb.velocity = Quaternion.Euler(0, transform.eulerAngles.y - oldy, 0) * rb.velocity;
             rb.AddForce(movement * acceleration, ForceMode.Acceleration);
@@ -53,6 +57,8 @@ public class CarController : MonoBehaviour
         //check for falling into the abyss
         if (isFalling() || isTilted())
         {
+            respawning = true;
+            rb.freezeRotation = true;
             switch(lapPosition)
             {
                 //sends you forward a checkpoint if you fall off
@@ -104,6 +110,19 @@ public class CarController : MonoBehaviour
             }
         }
 
+        if (respawning)
+        {
+            if (rb.velocity.y == 0f)
+            {
+                respawning = false;
+                rb.freezeRotation = false;
+            }
+            else
+            {
+                rb.angularVelocity = Vector3.zero;
+            }
+        }
+
         //cap speed
         if (Math.Abs(rb.velocity.magnitude) > maxSpeed)
         {
@@ -118,6 +137,11 @@ public class CarController : MonoBehaviour
         //    rb.AddForce(moveFaster * acceleration, ForceMode.Acceleration);
         //}
 
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        //collision.impulse.Scale(new Vector3(0, 1, 0));
     }
 
     bool isTilted()
