@@ -24,6 +24,7 @@ public class CarController : MonoBehaviour
     void Start ()
     {
         rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
         lapNum = 1;
         lapPosition = -1;
     }
@@ -109,6 +110,7 @@ public class CarController : MonoBehaviour
             rb.velocity = rb.velocity * maxSpeed / rb.velocity.magnitude;
         }
 
+        //DO NOT DELETE. MAY POTENTIALLY USE AS AN OPTIONAL GARBAGE MODE
         //ensure you are going the minimum speed
         //if (Math.Abs(rb.velocity.magnitude) < minSpeed && !isFalling() && !isAirborne())
         //{
@@ -116,11 +118,6 @@ public class CarController : MonoBehaviour
         //    rb.AddForce(moveFaster * acceleration, ForceMode.Acceleration);
         //}
 
-        //correct angular velocity
-        //if (rb.angularVelocity.magnitude > 10)
-        //{
-        //    rb.angularVelocity = oldAV;
-        //}
     }
 
     bool isTilted()
